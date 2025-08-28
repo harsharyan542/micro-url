@@ -20,6 +20,11 @@ const shortUrlSchema = new mongoose.Schema({
   user:{
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
+  },
+  avatar: {
+    type: String,
+    required: false,
+    default: "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp",
   }
 });
 

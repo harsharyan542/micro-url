@@ -1,23 +1,18 @@
-import { generateShortUrl } from "../utilis/helper.js";
-import { createShortUrl } from "../dao/shortUrl.dao.js";
+import { generateShortUrl } from "../utilis/helper.js"
+import { getCustomShortUrl, saveShortUrl } from "../dao/shortUrl.dao.js"
 
-export const createShortUrlServiceWithoutUser = async (url) => {
-    const shortUrl = generateShortUrl(7);
-    if(!shortUrl) {
-        throw new Error("Failed to generate short URL");
-    }
-    await createShortUrl(shortUrl, url);
-        console.log(`Short URL created: ${shortUrl}`);
-
-    console.log(`Received request for URL: `, url);
-    return shortUrl;
+export const createShortUrlWithoutUser = async (url) => {
+    const shortUrl = generateShortUrl(7)
+    if(!shortUrl) throw new Error("Short URL not generated")
+    await saveShortUrl(shortUrl,url)
+    return shortUrl
 }
 
-export const createShortUrlServiceWithUser = async (url, userId) => {
-    const shortUrl = generateShortUrl(7);
-    await createShortUrl(shortUrl, url, userId);
-    console.log(`Short URL created: ${shortUrl}`);
+export const createShortUrlWithUser = async (url,userId,slug=null) => {
+    const shortUrl = slug || generateShortUrl(7)
+    const exists = await getCustomShortUrl(slug)
+    if(exists) throw new Error("This custom url already exists")
 
-    console.log(`Received request for URL: `, url);
-    return shortUrl;
+    await saveShortUrl(shortUrl,url,userId)
+    return shortUrl
 }
