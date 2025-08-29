@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import connectDB from './src/config/mongo.config.js';
 import auth_routes from './src/routes/auth.routes.js';
 import short_url from './src/routes/shortUrl.routes.js';
+import user_routes from './src/routes/user.route.js';
 import { redirectFromShortUrl } from './src/controllers/shortUrl.controller.js';
 import {errorHandler} from './src/utilis/errorHandler.js';
 dotenv.config("./.env");
@@ -20,7 +21,7 @@ app.use(cors({
     origin: 'http://localhost:5173', // your React app
     credentials: true // 👈 this allows cookies to be sent
 }));
-
+app.use("/api/user",user_routes)
 app.use('/api/auth',auth_routes);
 app.use('/api/create', short_url);
 app.get('/:id', redirectFromShortUrl);
