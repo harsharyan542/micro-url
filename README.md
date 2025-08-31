@@ -1,45 +1,44 @@
 # URL Shortener
 
-A full-stack URL shortener application that allows users to convert long URLs into short, shareable links. Built with React frontend and Express.js backend.
+A full-stack URL shortening service built with Node.js, Express, MongoDB, and React. This application allows users to create shortened URLs, track clicks, and manage their links with user authentication.
 
 ## 🚀 Features
 
-- **URL Shortening**: Convert long URLs into short 7-character IDs
-- **Click Tracking**: Track the number of clicks on each shortened URL
-- **Instant Redirect**: Automatically redirect users to the original URL
-- **Copy to Clipboard**: One-click copy functionality for shortened URLs
-- **Responsive Design**: Clean, modern UI built with Tailwind CSS
-- **Error Handling**: Comprehensive error handling for better user experience
-- **CORS Support**: Configured for cross-origin requests between frontend and backend
+### Backend Features
+- **User Authentication**: JWT-based registration and login system
+- **URL Shortening**: Generate random short URLs or use custom slugs
+- **Click Analytics**: Track the number of clicks for each shortened URL
+- **User Dashboard**: Authenticated users can view all their created URLs
+- **Secure Redirects**: Fast redirection from short URLs to original URLs
+- **Error Handling**: Comprehensive error handling with custom error classes
+
+### Frontend Features
+- **Responsive UI**: Built with React and TailwindCSS
+- **User Registration/Login**: Secure authentication forms
+- **URL Creation**: Interface to create short URLs with optional custom slugs
+- **Dashboard**: View and manage user's shortened URLs
+- **State Management**: Redux Toolkit for application state
+- **API Integration**: React Query for efficient data fetching
 
 ## 🛠️ Tech Stack
 
-### Frontend
-- **React 18** - UI library
-- **Vite** - Build tool and dev server
-- **Tailwind CSS** - Utility-first CSS framework
-- **Axios** - HTTP client for API requests
-- **JavaScript (ES6+)** - Programming language
-
 ### Backend
-- **Node.js** - Runtime environment
-- **Express.js** - Web framework
-- **MongoDB** - NoSQL database (MongoDB Atlas)
-- **Mongoose** - MongoDB object modeling
-- **nanoid** - Unique ID generator for short URLs
-- **CORS** - Cross-origin resource sharing
-- **dotenv** - Environment variable management
+- **Runtime**: Node.js
+- **Framework**: Express.js
+- **Database**: MongoDB with Mongoose ODM
+- **Authentication**: JWT (JSON Web Tokens)
+- **Password Hashing**: bcryptjs
+- **URL Generation**: nanoid
+- **Environment**: dotenv for configuration
 
-### Database Schema
-```javascript
-{
-  full_url: String,     // Original long URL
-  short_url: String,    // Generated short ID (7 characters)
-  clicks: Number,       // Click counter (default: 0)
-  user: ObjectId,       // User reference (optional)
-  createdAt: Date       // Timestamp
-}
-```
+### Frontend
+- **Framework**: React 19
+- **Build Tool**: Vite
+- **Styling**: TailwindCSS 4.x
+- **State Management**: Redux Toolkit
+- **Data Fetching**: TanStack React Query
+- **Routing**: TanStack React Router
+- **HTTP Client**: Axios
 
 ## 📁 Project Structure
 
@@ -48,221 +47,234 @@ url_shortner/
 ├── Backend/
 │   ├── src/
 │   │   ├── config/
-│   │   │   └── mongo.config.js      # MongoDB connection
+│   │   │   ├── config.js          # Cookie and app configuration
+│   │   │   └── mongo.config.js    # MongoDB connection
 │   │   ├── controllers/
-│   │   │   └── shortUrl.controller.js # Request handlers
-│   │   ├── dao/
-│   │   │   └── shortUrl.dao.js      # Database operations
+│   │   │   ├── auth.controller.js     # Authentication endpoints
+│   │   │   ├── shortUrl.controller.js # URL shortening endpoints
+│   │   │   └── user.controller.js     # User-related endpoints
+│   │   ├── dao/                   # Data Access Objects
+│   │   │   ├── shortUrl.dao.js    # URL database operations
+│   │   │   └── user.dao.js        # User database operations
+│   │   ├── middleware/
+│   │   │   └── auth.middleware.js # JWT authentication middleware
 │   │   ├── models/
-│   │   │   └── shortUrl.model.js    # Mongoose schema
+│   │   │   ├── shortUrl.model.js  # URL schema
+│   │   │   └── user.model.js      # User schema
 │   │   ├── routes/
-│   │   │   └── shortUrl.routes.js   # API routes
-│   │   ├── services/
-│   │   │   └── shortUrl.service.js  # Business logic
+│   │   │   ├── auth.routes.js     # Authentication routes
+│   │   │   ├── shortUrl.routes.js # URL shortening routes
+│   │   │   └── user.routes.js     # User routes
+│   │   ├── services/              # Business logic layer
+│   │   │   ├── auth.service.js    # Authentication services
+│   │   │   └── shortUrl.service.js # URL shortening services
 │   │   └── utilis/
-│   │       ├── helper.js            # Utility functions
-│   │       ├── errorHandler.js      # Error handling
-│   │       └── tryCatchWrapper.js   # Async error wrapper
-│   ├── app.js                       # Express app setup
-│   ├── package.json
-│   └── .env                         # Environment variables
+│   │       ├── errorHandler.js    # Custom error classes
+│   │       ├── helper.js          # JWT and URL generation utilities
+│   │       └── tryCatchWrapper.js # Async error wrapper
+│   ├── app.js                     # Express app configuration
+│   └── package.json
 ├── Frontend/
 │   ├── src/
-│   │   ├── apis/
-│   │   │   └── shortUrl.api.js      # API service functions
-│   │   ├── components/
-│   │   │   └── UrlForm.jsx          # URL shortening form
-│   │   ├── pages/
-│   │   │   └── HomePage.jsx         # Main page
-│   │   ├── utilis/
-│   │   │   └── axiosInstance.js     # Axios configuration
-│   │   ├── App.jsx                  # Root component
-│   │   └── main.jsx                 # Entry point
+│   │   ├── components/            # React components
+│   │   ├── pages/                 # Page components
+│   │   ├── routing/               # Route configuration
+│   │   ├── store/                 # Redux store
+│   │   └── utils/                 # Utility functions
 │   ├── package.json
-│   └── index.html
-├── .gitignore
+│   └── vite.config.js
 └── README.md
 ```
 
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Node.js (v16+ recommended)
-- MongoDB Atlas account (or local MongoDB)
-- Git
+- Node.js (v18 or higher)
+- MongoDB (local or cloud instance)
+- npm or yarn
 
 ### Installation
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/harsharyan542/url_shortner.git
+   git clone https://github.com/yourusername/url_shortner.git
    cd url_shortner
    ```
 
-2. **Setup Backend**
+2. **Backend Setup**
    ```bash
    cd Backend
    npm install
    ```
 
-3. **Setup Frontend**
-   ```bash
-   cd Frontend
-   npm install
+3. **Environment Variables**
+   Create a `.env` file in the Backend directory:
+   ```env
+   JWT_SECRET=your_jwt_secret_here
+   MONGODB_URI=mongodb://localhost:27017/urlshortener
+   APP_URL=http://localhost:3000/
+   NODE_ENV=development
    ```
 
-4. **Environment Configuration**
-   
-   Create `.env` file in the Backend directory:
-   ```env
-   MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/url_shortner
-   APP_URL=http://localhost:3000/
+4. **Frontend Setup**
+   ```bash
+   cd ../Frontend
+   npm install
    ```
 
 ### Running the Application
 
-1. **Start Backend Server**
+1. **Start the Backend Server**
    ```bash
    cd Backend
    npm run dev
-   # Server runs on http://localhost:3000
    ```
+   Backend will run on `http://localhost:3000`
 
-2. **Start Frontend Development Server**
+2. **Start the Frontend Development Server**
    ```bash
    cd Frontend
    npm run dev
-   # Frontend runs on http://localhost:5173
    ```
+   Frontend will run on `http://localhost:5173`
 
 ## 📡 API Endpoints
 
-### Create Short URL
-- **POST** `/api/create`
-- **Body**: 
-  ```json
-  {
-    "url": "https://www.example.com",
-    "slug": "custom-slug" // optional
-  }
-  ```
-- **Response**: 
-  ```json
-  {
-    "shortUrl": "http://localhost:3000/XHTaGAk"
-  }
-  ```
+### Authentication
+- `POST /api/auth/register` - User registration
+- `POST /api/auth/login` - User login
+- `POST /api/auth/logout` - User logout
+- `GET /api/auth/me` - Get current user
 
-### Redirect to Original URL
-- **GET** `/:id`
-- **Example**: `http://localhost:3000/XHTaGAk`
-- **Action**: Increments click counter and redirects to original URL
+### URL Management
+- `POST /api/create` - Create a short URL
+- `GET /:id` - Redirect to original URL
+- `GET /api/user/urls` - Get user's URLs (authenticated)
+
+### Request/Response Examples
+
+**Create Short URL:**
+```json
+POST /api/create
+{
+  "url": "https://www.example.com/very-long-url",
+  "slug": "my-custom-slug" // optional
+}
+
+Response:
+{
+  "shortUrl": "http://localhost:3000/abc123"
+}
+```
+
+**User Registration:**
+```json
+POST /api/auth/register
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "securepassword"
+}
+
+Response:
+{
+  "message": "register success"
+}
+```
 
 ## 🏗️ Architecture
 
-### Layer Architecture
-- **Controller Layer**: Handles HTTP requests/responses
-- **Service Layer**: Contains business logic
-- **DAO Layer**: Database access operations
-- **Model Layer**: Data schemas and validation
+### Backend Architecture
+The backend follows a **layered architecture pattern**:
 
-### Key Features Implementation
+- **Controllers**: Handle HTTP requests and responses
+- **Services**: Contain business logic
+- **DAOs**: Manage database operations
+- **Models**: Define database schemas
+- **Middleware**: Handle authentication and request processing
 
-#### URL Shortening Process
-1. User submits long URL through React form
-2. Frontend sends POST request to `/api/create`
-3. Backend generates 7-character unique ID using nanoid
-4. URL and short ID saved to MongoDB
-5. Backend returns shortened URL to frontend
-6. User can copy the shortened URL
+### Security Features
+- **Password Hashing**: bcryptjs for secure password storage
+- **JWT Authentication**: Stateless authentication with HTTP-only cookies
+- **CORS Configuration**: Proper cross-origin resource sharing setup
+- **Input Validation**: Request validation and sanitization
+- **Error Handling**: Centralized error handling with custom error classes
 
-#### Redirect Process
-1. User visits shortened URL (e.g., `/XHTaGAk`)
-2. Backend looks up short ID in database
-3. If found: increment click counter and redirect to original URL
-4. If not found: return 404 error
+### Database Schema
+
+**User Schema:**
+```javascript
+{
+  name: String,
+  email: String (unique),
+  password: String (hashed),
+  timestamps: true
+}
+```
+
+**URL Schema:**
+```javascript
+{
+  full_url: String,      // Original URL
+  short_url: String,     // Shortened URL identifier
+  user: ObjectId,        // Reference to user (optional)
+  clicks: Number,        // Click counter
+  timestamps: true
+}
+```
 
 ## 🔧 Configuration
 
-### CORS Configuration
-```javascript
-app.use(cors({
-    origin: 'http://localhost:5173',
-    credentials: true
-}));
-```
+### Backend Configuration
+- **Port**: 3000 (default)
+- **Database**: MongoDB
+- **Session**: JWT with 1-hour expiration
+- **CORS**: Configured for frontend on port 5173
 
-### Axios Configuration
-```javascript
-const axiosInstance = axios.create({
-    baseURL: "http://localhost:3000",
-    timeout: 10000,
-    withCredentials: true
-});
-```
-
-## 🎨 UI Features
-
-- Clean, modern interface
-- Real-time error handling
-- Loading states for better UX
-- Responsive design for all devices
-- One-click copy functionality
-- Visual feedback for user actions
-
-## 🚦 Error Handling
-
-- Frontend: Axios interceptors for global error handling
-- Backend: Custom error handler middleware
-- Database: Mongoose validation and error handling
-- User-friendly error messages displayed in UI
-
-## 🔐 Security Features
-
-- Input validation for URLs
-- CORS protection
-- Environment variable protection
-- MongoDB injection prevention through Mongoose
-
-## 📝 Development Notes
-
-- Uses ES6 modules (`"type": "module"` in package.json)
-- Implements separation of concerns with layered architecture
-- Includes comprehensive error handling
-- Uses modern React hooks (useState, useEffect)
-- MongoDB Atlas for cloud database hosting
+### Frontend Configuration
+- **Development Server**: Vite
+- **Build Tool**: Vite with React plugin
+- **Styling**: TailwindCSS with Vite integration
+- **State Management**: Redux Toolkit
 
 ## 🚀 Deployment
 
-### Backend Deployment (e.g., Heroku)
-1. Update CORS origin to production URL
-2. Set environment variables in hosting platform
-3. Update APP_URL to production URL
+### Backend Deployment
+1. Set environment variables for production
+2. Configure MongoDB connection string
+3. Set `NODE_ENV=production`
+4. Deploy to platforms like Heroku, Railway, or DigitalOcean
 
-### Frontend Deployment (e.g., Vercel)
-1. Update API base URL in axiosInstance
-2. Build the project: `npm run build`
-3. Deploy the `dist` folder
+### Frontend Deployment
+1. Build the production bundle:
+   ```bash
+   npm run build
+   ```
+2. Deploy the `dist` folder to platforms like Vercel, Netlify, or AWS S3
 
 ## 🤝 Contributing
 
 1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## 📄 License
+## 📝 License
 
 This project is licensed under the ISC License.
 
-## 👨‍💻 Author
+## 🐛 Known Issues
 
-**Harsh Aryan**
-- GitHub: [@harsharyan542](https://github.com/harsharyan542)
+- TailwindCSS installation may have compatibility issues on some systems
+- Ensure Node.js version 18+ for optimal compatibility with Express 5.x
+
+## 📞 Support
+
+For support, email your-email@example.com or open an issue on GitHub.
 
 ---
 
-**Live Demo**: [Add your deployed URL here]
+**Made with ❤️ by [Your Name]**
 
-**Repository**: https://github.com/harsharyan542/url_shortner
+Similar code found with 1 license type
