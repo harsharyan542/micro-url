@@ -260,10 +260,6 @@ The backend follows a **layered architecture pattern**:
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## 📝 License
-
-This project is licensed under the ISC License.
-
 ## 🐛 Known Issues
 
 - TailwindCSS installation may have compatibility issues on some systems
@@ -271,10 +267,9 @@ This project is licensed under the ISC License.
 
 ## 📞 Support
 
-For support, email your-email@example.com or open an issue on GitHub.
+For support, email your-harsharyan542@gmail.com or open an issue on GitHub.
 
 ---
 
-**Made with ❤️ by [Your Name]**
+**Made with ❤️ by ARYAN HARSH**
 
-Similar code found with 1 license type
